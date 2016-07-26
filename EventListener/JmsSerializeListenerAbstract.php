@@ -105,7 +105,11 @@ class JmsSerializeListenerAbstract
 
         $result = [];
         if (array_key_exists('includeOriginal', $this->config) && $this->config['includeOriginal']) {
-            $result['original'] = $value;
+            if (array_key_exists('includeHost', $this->config) && $this->config['includeHost']) {
+                $result['original'] = $this->getHostUrl().$value;
+            } else {
+                $result['original'] = $value;
+            }
         }
 
         $filters = $liipAnnotation->getFilter();
